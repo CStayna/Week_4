@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Leaflet Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+
+<body>
+
+  <div id="map" style="width: 600px; height: 400px"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="sites.geojson"></script>
+
+  <script>
+
+    var map = L.map('map').setView([40, -75.165222], 10);
+
+ // Amazon Q prompt: Can you create the outline of a leaflet map that uses GeoJson methods to create circle overlays and filters
+
+    // This adds a mapbox base map
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  id: 'mapbox/light-v10', 
+  accessToken: 'pk.eyJ1IjoiY29saW44MTUiLCJhIjoiY2xzZHZndnh2MTQzdzJrdDBoNTRlNmR1ciJ9.IWJk31gwxv8sW3ss06obkQ'
+}).addTo(map);
+
+
+
+// changed the color to green which can be found in the options section of Leaflet 
+    var park = L.geoJson(park, {
+        pointToLayer: function(name,latlng) {
+              console.log(name.properties)
+              return L.circleMarker(latlng, {
+                radius: 2, 
+                color: 'green',
+                  //step4
+              });   
+          },
+
+
+ 
+        // Filtering for just Frank Glavin Playground. Filtering can be found in the GeoJSon section of Leaflet
+          filter: function(feature, layer){
+          if(feature.properties.PARK_NAME === "Frank Glavin Playground"){
+              return true
+                        };
+                  
+
+
+}}).addTo(map);
+
+
+  </script>
+
+</body>
+</html>
